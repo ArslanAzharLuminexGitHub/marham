@@ -6,7 +6,7 @@ const key = process.env.secret_key;
 
 
 
-/**************** SIGN-UP Admin branch1 next*****************/
+/**************** SIGN-UP Admin branch1 next PUSHED by b1*****************/
 const adminSignUp = async (req, res) => {
     try {
         let { userName, password, email, phone } = req.body;
