@@ -7,7 +7,7 @@ const key = process.env.secret_key;
 
 
 /**************** SIGN-UP Admin MAIN *****************/
-const adminSignUp = async (req, res) => {
+const adminSignUp = async (req, res,next) => {
     try {
         let { userName, password, email, phone } = req.body;
 
@@ -23,7 +23,8 @@ const adminSignUp = async (req, res) => {
                 phone: phone,
                 role: "ADMIN"
             }).then((created) => {
-                return res.status(200).json({ "ALERT": created });
+                // return res.status(200).json({ "ALERT": created });
+                next(created);
             }).catch((err) => {
                 return res.status(500).json({ "ALERT ERROR ADMIN": err });
             });
