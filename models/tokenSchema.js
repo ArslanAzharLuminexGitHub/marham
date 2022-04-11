@@ -1,8 +1,12 @@
-const mongodb = require("../app");
+const mongodb = require("mongoose");
 const Schema = mongodb.Schema;
 
 
 const tokenSchema = new Schema({
+    
+    admin:  [{ type: "ObjectId", ref: 'dataBase' }],
+
+
     token: {
         type: String,
         required: true
@@ -12,6 +16,7 @@ const tokenSchema = new Schema({
         type: String,
         required: true
     },
+    
     role: {
         type: String,
         required: true

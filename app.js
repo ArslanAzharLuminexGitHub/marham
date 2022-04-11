@@ -5,14 +5,16 @@ require("colors");
 const mongodb = require("mongoose");
 require("dotenv").config();
 
+const tokenSchema = require("./models/tokenSchema");
+
 
 //******************** JSON ENABLING *************************//
 app.use(express.urlencoded({extended:false}));
 app.use(express.json()); //For JSON Enable...
 
 //*******  boss's code for parser *************/
-const { fileParser } = require('express-multipart-file-parser');
-const res = require("express/lib/response");
+const { fileParser, values } = require('express-multipart-file-parser');
+//const res = require("express/lib/response");
 app.use(
     fileParser({
       rawBodyOptions: {
@@ -60,8 +62,11 @@ app.listen(PORT,"localhost",()=>{
 });
 
 
+app.get("/world",async (req,response)=>{
+
+  
 
 
-app.use((created,req,res,next)=>{
-  return res.status(201).json({"Created from use":created});
+
+console.log("working world");
 });

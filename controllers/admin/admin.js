@@ -3,12 +3,14 @@ const tokenSchema = require("../../models/tokenSchema");
 const bcrypt = require("../../utility/bcrypt/bcrypt");
 const jwt = require("jsonwebtoken");
 const key = process.env.secret_key;
+const ret = require("../../utility/return/return");
 
 
 
 /**************** SIGN-UP Admin MAIN *****************/
 const adminSignUp = async (req, res,next) => {
     try {
+
         let { userName, password, email, phone } = req.body;
 
         let adminFound = await dataBaseSchema.findOne({ email: email });
@@ -23,14 +25,13 @@ const adminSignUp = async (req, res,next) => {
                 phone: phone,
                 role: "ADMIN"
             }).then((created) => {
-                // return res.status(200).json({ "ALERT": created });
-                next(created);
+                return res.status(200).json({ "ALERT ": created });
             }).catch((err) => {
                 return res.status(500).json({ "ALERT ERROR ADMIN": err });
             });
         }
     } catch (error) {
-        return res.status(500).json({ "ERROR admin": error });
+        return res.status(500).json({ "ERROR admin": error.message });
     }
 };
 
@@ -55,7 +56,7 @@ const adminLogin = async (req, res) => {
                     let token_found = await tokenSchema.findOne({ email: adminFound.email });
                     if (token_found) {
                         console.log(`User: ${adminFound.email} is already Logged_Inn.`);
-                        return res.status(406).json({ "ALERT": `User is already Logged_Inn` });
+                        return ret(res,406,"User is Already Logged Inn");
                     } else {
                         console.log("User Logged Inn");
                         console.log("Result Admin :" + adminFound);
@@ -67,16 +68,16 @@ const adminLogin = async (req, res) => {
                         });
                         if (create_token) {
 
-                            return res.status(200).json({ "ALERT": `User ${adminFound.email} Logged Inn` });
+                            return ret(res,200,"token Created");
                         }
                     }
                 } catch (error) {
-                    return res.status(500).json({ "ERROR:Token Catch": `${error}` });
+                    return ret(res,500,error);
                 }
             }
         }
     } catch (error) {
-        return res.status(500).json({ "ERROR admin": error });
+        return res.status(500).json({ "ERROR admin": `${error}` });
     }
 };
 
@@ -120,3 +121,5 @@ module.exports = {
    adminSignUp,
    adminLogin
 }
+
+
