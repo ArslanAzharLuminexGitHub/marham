@@ -62,11 +62,8 @@ app.listen(PORT,"localhost",()=>{
 });
 
 
-app.get("/world",async (req,response)=>{
+app.get("/world",async (_res,res)=>{
+  let data = await tokenSchema.find({}).populate("admin","email"); //populate as 'admin'
+  return res.status(200).json({"ALERT from world":data});
 
-  
-
-
-
-console.log("working world");
 });

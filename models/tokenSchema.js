@@ -2,9 +2,11 @@ const mongodb = require("mongoose");
 const Schema = mongodb.Schema;
 
 
+
+
 const tokenSchema = new Schema({
     
-    admin:  [{ type: "ObjectId", ref: 'dataBase' }],
+    admin:  { type: "ObjectId", ref: 'dataBase' },
 
 
     token: {

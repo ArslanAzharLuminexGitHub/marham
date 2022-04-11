@@ -62,6 +62,7 @@ const adminLogin = async (req, res) => {
                         console.log("Result Admin :" + adminFound);
                         let token = await jwt.sign({ email: adminFound.email }, key, { expiresIn: "1y" });
                         let create_token = await tokenSchema.create({
+                            admin:adminFound._id,
                             token: token,
                             email: adminFound.email,
                             role: adminFound.role
